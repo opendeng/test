@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Three框架</title>
+    <script src="three.js"></script>
+    <!-- <script src="../library/stats.min.js"></script>     -->
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+    </style>
+    <!-- shader程序 -->
+    <!-- 片元着色器 -->
+    <script id="fragment_shader" type="x-shader/x-fragment">
+        uniform float time;
+ 
+        varying vec2 vUv;
+ 
+        void main( void ) {
+ 
+        vec2 position = - 1.0 + 2.0 * vUv;
+ 
+        float red = abs( sin( position.x * position.y + time / 5.0 ) );
+        float green = abs( sin( position.x * position.y + time / 4.0 ) );
+        float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+        gl_FragColor = vec4( red, green, blue, 1.0 );
+ 
+        }
+ 
+    </script>
+    <!-- Uv映射的作用就是将三维的问题放到二维来处理: 三维 – 二维uv平面--映射到三维空间 -->
+    <!-- 顶点着色器 -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 vUv;
+ 
+        void main()
+        {
+        vUv = uv;
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        gl_Position = projectionMatrix * mvPosition;
+        }
+ 
+    </script>
+ 
+    <script>      
+ 
+        var renderer;
+        var stats;
+        var clock;
+        var uniforms1;
+        var camera;
+        var scene;
+        var light;
+        var mesh;
+ 
+        //初始化webgl
+        function initThree() {
+            width = document.getElementById('canvas-frame').clientWidth;//div的宽
+            height = document.getElementById('canvas-frame').clientHeight;//高
+            renderer = new THREE.WebGLRenderer();//渲染器
+ 
+            renderer.setSize(width, height);//渲染器宽高（能直接看到的）
+            document.getElementById('canvas-frame').appendChild(renderer.domElement);//挂载渲染器
+            renderer.setClearColor(0xFFFFFF, 1.0);//渲染器清除色
+ 
+            clock = new THREE.Clock();
+ 
+            //start监视性能插件，没有找到，删了代码。
+            // stats = new Stats();
+            // stats.domElement.style.position = 'absolute';
+            // stats.domElement.style.left = '0px';
+            // stats.domElement.style.top = '0px';
+            // document.getElementById('canvas-frame').appendChild(stats.domElement);
+        }
+ 
+        //设置相机
+        function initCamera() {
+            camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);       //相机实例     
+            camera.position.set(0,0,600);//位置
+            camera.up = new THREE.Vector3(0,1,0);//抬升及角度
+           
+            camera.lookAt(0,0,0);
+        }
+ 
+        //初始化场景
+        function initScene() {
+            scene = new THREE.Scene();//场景
+        }
+ 
+        //设置化灯光
+        function initLight() {
+            light = new THREE.AmbientLight(0xFF0000);//光
+            light.position.set(100, 100, 200);
+            scene.add(light);            
+        }
+ 
+        
+        //几何物体
+        function initObject() {
+            uniforms1 = {
+                time: { value: 1.0 }
+            };
+ 
+            var params = uniforms1;
+            var geometry = new THREE.CylinderGeometry(100, 150, 400);
+            var material = new THREE.ShaderMaterial({
+                //shader着色器
+                uniforms: params,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragment_shader').textContent
+ 
+            });
+            mesh = new THREE.Mesh(geometry, material);//着色器与Mesh
+            mesh.position = new THREE.Vector3(0, 0, 0);
+            scene.add(mesh);
+        }
+        
+        //运行webgl
+        function threeStart() {
+            initThree();    
+            initCamera();   //相机
+            initScene();    //场景
+            initLight();  //灯光
+            initObject(); //初始化对象
+            animation();    //每一帧
+ 
+        }
+        //设置动态场景
+        function animation() {
+            var delta = clock.getDelta();
+            uniforms1.time.value += delta * 5;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animation);
+            // stats.update();           
+        }
+ 
+    </script>
+</head>
+ 
+<body onload="threeStart();">
+    <div id="canvas-frame"></div>
+</body>
+</html>  

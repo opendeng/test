@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>canvas { width: 100%; height: 100% ;}</style>
+    <script src="three.js"></script>
+</head>
+<body>
+    <script>
+        //webgl使用右手坐标，就是z轴在里
+        var scene = new THREE.Scene();//场景实例
+        
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);//透视相机
+        
+        // var renderer = new THREE.WebGLRenderer();//渲染器
+      var  renderer=new THREE.WebGLRenderer({
+                    antialias:true,//antialias:true/false是否开启反锯齿
+                    precision:"highp",//precision:highp/mediump/lowp着色精度选择
+                    alpha:true,//alpha:true/false是否可以设置背景色透明
+                    premultipliedAlpha:false,//?
+                    stencil:false,//?
+                    preserveDrawingBuffer:true,//preserveDrawingBuffer:true/false是否保存绘图缓冲
+                    maxLights:1//maxLights:最大灯光数
+                    });
+        renderer.setSize(window.innerWidth, window.innerHeight);//设置渲染器大小
+        
+        // 渲染器renderer的domElement元素，表示渲染器中的画布，所有的渲染都是画在domElement上的
+        document.body.appendChild(renderer.domElement);//在页面上添加渲染器
+        var geometry = new THREE.CubeGeometry(1,1,1);//添加
+       
+        var img = new Image();
+        img.setAttribute('crossOrigin', 'anonymous');
+        img.src = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3196360165,2596408750&fm=26&gp=0.jpg';
+        
+        // var loader=new THREE.TextureLoader();
+        // loader.setCrossOrigin( "Anonymous" );
+        var material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3196360165,2596408750&fm=26&gp=0.jpg") });//物体
+        
+
+        var cube = new THREE.Mesh(geometry, material); scene.add(cube);//物体
+        camera.position.z = 5;//轴
+        function render() {//实例化函数
+            requestAnimationFrame(render);//下一帧的渲染函数、、游戏循环，所以能动。
+            cube.rotation.x += 0.1;//改变x轴
+            cube.rotation.y += 0.1;//改变y轴
+            renderer.render(scene, camera);//渲染器实例场景和相机渲染
+        }
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>canvas { width: 100%; height: 100% ;}</style>
+    <script src="three.js"></script>
+</head>
+<body>
+    <script>
+        //webgl使用右手坐标，就是z轴在里
+        var scene = new THREE.Scene();//场景实例
+        
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);//透视相机
+        
+        var renderer = new THREE.WebGLRenderer();//渲染器
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);//设置渲染器大小
+        
+        // 渲染器renderer的domElement元素，表示渲染器中的画布，所有的渲染都是画在domElement上的
+        document.body.appendChild(renderer.domElement);//在页面上添加渲染器
+        // camera.position.z = 5;//轴
+
+        //This will add a starfield to the background of a scene
+var starsGeometry = new THREE.Geometry();//几何体
+
+for ( var i = 0; i < 100; i ++ ) {//无数个点
+
+    // var star = new THREE.Vector3();//点实例
+    // star.x = THREE.Math.randFloatSpread( 2000 );
+    // star.y = THREE.Math.randFloatSpread( 2000 );
+    // star.z = THREE.Math.randFloatSpread( 2000 );
+
+    // starsGeometry.vertices.push( star );
+
+  
+
+    var geometry = new THREE.SphereGeometry();//添加
+     geometry.x = THREE.Math.randFloatSpread( 200 );
+     geometry.y = THREE.Math.randFloatSpread( 200 );
+     geometry.z = THREE.Math.randFloatSpread( 200 );
+     starsGeometry.vertices.push( geometry );
+        
+
+}
+
+
+
+var starsMaterial = new THREE.PointsMaterial( { map: THREE.ImageUtils.loadTexture("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3196360165,2596408750&fm=26&gp=0.jpg"),size:5 } );
+
+var starField = new THREE.Points( starsGeometry, starsMaterial );
+
+scene.add( starField );
+
+        
+        function render() {//实例化函数
+            requestAnimationFrame(render);//下一帧的渲染函数、、游戏循环，所以能动。
+           // starField.CubeGeometry.rotation.x+=1;
+            //starField.rotation.x += 0.01;//改变x轴
+            starField.rotation.y += 0.05;//改变y轴
+            renderer.render(scene, camera);//渲染器实例场景和相机渲染
+        }
+        render();
+    </script>
+    <div>123</div>
+</body>
+</html>

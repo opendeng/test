@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>点与线</title>
+    <style>canvas { width: 100%; height: 100% ;background-color: violet}</style>
+    <script src="three.js"></script>
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();//场景实例        
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);//透视相机       
+        var renderer = new THREE.WebGLRenderer({
+                    antialias : true
+                });
+        renderer.setSize(window.innerWidth, window.innerHeight);//设置渲染器大小
+        document.body.appendChild(renderer.domElement);//在页面上添加渲染器
+        var geometry = new THREE.Geometry();//声明一个空几何体对象
+        var p1 = new THREE.Vector3(1,1,1);//顶点1坐标
+        var p2 = new THREE.Vector3(2,2,20);//顶点2坐标
+                geometry.vertices.push(p1,p2); //顶点坐标添加到geometry对象,存放点集合
+                var material=new THREE.LineBasicMaterial({
+                    color:0x0000ff //线条颜色
+                    });//材质对象
+                    camera.position.z = 5;
+                var line=new THREE.Line(geometry,material);//线条模型对象
+                scene.add(line);//线条对象添加到场景中
+                ////////////
+               
+                /////////////
+                
+            function render() 
+                {//实例化函数
+                requestAnimationFrame(render);//下一帧的渲染函数、、游戏循环，所以能动。
+                line.rotation.x += 0.1;//改变x轴
+               // line.rotation.y += 0.1;//改变y轴
+                renderer.render(scene, camera);//渲染器实例场景和相机渲染
+                }
+                render();
+        </script>
+</body>
+</html>
