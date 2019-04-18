@@ -303,12 +303,12 @@
 
 				for ( var i = 0, l = objects.length; i < l; i ++ ) {
 
-					var phi = Math.acos( - 1 + ( 2 * i ) / l );
+					var phi = Math.acos( - 1 + ( 2 * i ) / l );//额
 					var theta = Math.sqrt( l * Math.PI ) * phi;
 
 					var object = new THREE.Object3D();
 
-					object.position.setFromSphericalCoords( 800, phi, theta );
+					object.position.setFromSphericalCoords( 800, phi, theta );//球面
 
 					vector.copy( object.position ).multiplyScalar( 2 );
 
@@ -329,7 +329,7 @@
 
 					var object = new THREE.Object3D();
 
-					object.position.setFromCylindricalCoords( 900, theta, y );
+					object.position.setFromCylindricalCoords( 900, theta, y );//圆柱(半径，？，？)
 
 					vector.x = object.position.x * 2;
 					vector.y = object.position.y;
