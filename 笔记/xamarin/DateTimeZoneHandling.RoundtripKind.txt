@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+using GongHuiNewtonsoft.Json;
+ 
+namespace JSONDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Flight flight = new Flight
+            {
+                Destination = "Paris",
+                DepartureDate = new DateTime(2015, 12, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                DepartureDateUtc = new DateTime(2015, 12, 11, 0, 0, 0, DateTimeKind.Utc),
+                DepartureLocal = new DateTime(2015, 12, 11, 0, 0, 0, DateTimeKind.Local),
+                Duration = TimeSpan.FromHours(11.267)
+            };
+ 
+            Console.WriteLine("---------只对本地时间显示时区-------------");
+            string roundtripTimeZone = JsonConvert.SerializeObject(flight, Formatting.Indented, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind
+            });
+            Console.WriteLine(roundtripTimeZone);
+ 
+            Console.WriteLine("---------对所有时间显示时区---------------");
+            string localTimeZone = JsonConvert.SerializeObject(flight, Formatting.Indented, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Local
+            });
+            Console.WriteLine(localTimeZone);
+ 
+            Console.WriteLine("----------------不显示时区---------------");
+            string unspecifiedTimeZone = JsonConvert.SerializeObject(flight, Formatting.Indented, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Unspecified
+            });
+            Console.WriteLine(unspecifiedTimeZone);
+        }
+    }
+}
+
+--------------------- 
+作者：treeMountain 
+来源：CSDN 
+原文：https://blog.csdn.net/lovegonghui/article/details/50261619 
+版权声明：本文为博主原创文章，转载请附上博文链接！
