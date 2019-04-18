@@ -1,0 +1,13 @@
+用于.NET Core，Xamarin和.NET的自动类型安全的REST库，Refit是一个受Square Square Retrofit库影响的库，但它比REST API更容易：
+
+public interface IGitHubApi
+{
+    [Get("/users/{user}")]
+    Task<User> GetUser(string user);
+}
+RestService类生成一个使用HttpClient进行调用的IGitHubApi实现：
+
+放进接口，皆可以调用
+var gitHubApi = RestService.For<IGitHubApi>("https://api.github.com");
+
+var octocat = await gitHubApi.GetUser("octocat");
