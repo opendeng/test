@@ -4,9 +4,10 @@
     <title></title>
     <style>canvas { width: 100%; height: 100% ;}</style>
     <script src="three.js"></script>
+    <script src="OrbitControls.js"></script>
 </head>
 <body>
-    
+    <!-- 顶点着色器 Gpu -->
         <script id="vertexShader" type="x-shader/x-vertex">
             varying vec2 vUv;
            
@@ -51,6 +52,11 @@
   <!-- vColor * diffuse -->
   <!-- gl_FragColor = vec4( vUv.y, 1.0, vUv.x,1.0); -->
     <script>
+
+
+ 
+ 
+
         //webgl使用右手坐标，就是z轴在里
         var scene = new THREE.Scene();//场景实例
         
@@ -115,17 +121,36 @@ function initLight() {
             light.position.set(100, 100, 200);
             scene.add(light);            
         }
-
-
+    //用户交互插件 鼠标左键按住旋转，右键按住平移，滚轮缩放 
+    var controls; 
+        controls = new THREE.OrbitControls( camera, renderer.domElement ); 
+ // 如果使用animate方法时，将此函数删除 
+ //controls.addEventListener( 'change', render ); 
+ // 使动画循环使用时阻尼或自转 意思是否有惯性 
+ controls.enableDamping = true; 
+ //动态阻尼系数 就是鼠标拖拽旋转灵敏度 
+ //controls.dampingFactor = 0.25; 
+ //是否可以缩放 
+ controls.enableZoom = true; 
+ //是否自动旋转 
+ controls.autoRotate = false; 
+ //设置相机距离原点的最远距离 
+ controls.minDistance = 200; 
+ //设置相机距离原点的最远距离 
+ controls.maxDistance = 600; 
+ //是否开启右键拖拽 
+ controls.enablePan = true; 
         
         function render() {//实例化函数
+         
+            controls.update(); 
             var delta = clock.getDelta();
              uniforms1.time.value += delta * 5;//传递的变化的时间值
              initLight();
             requestAnimationFrame(render);//下一帧的渲染函数、、游戏循环，所以能动。
            // starField.CubeGeometry.rotation.x+=1;
-           particleSystem.rotation.x += 0.02;//改变x轴
-            particleSystem.rotation.y += 0.05;//改变y轴
+           //particleSystem.rotation.x += 0.02;//改变x轴
+            //particleSystem.rotation.y += 0.05;//改变y轴
             renderer.render(scene, camera);//渲染器实例场景和相机渲染
         }
         render();

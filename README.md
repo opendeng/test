@@ -1,6 +1,8 @@
 # test
 Three的学习过程、笔记
 1.https://docs.microsoft.com/zh-cn/previous-versions/windows/internet-explorer/ie-developer/samples/dn385807(v=vs.85)中文网
+2.轨道控制文件地址在官方案例的examples/js/controls/OrbitControls.js。
+
 第一点、千万不要忘记挂载渲染器到页面上。我日。
 
 第二点、画布无法被加载（跨域解决应该吧，没试过）、这个一般是安全问题，解决方法就是我们翻到three.js的源码到42843行把对应的loader.setCrossOrigin( this.crossOrigin ); 代码换成loader.setCrossOrigin( ‘Anonymous’ );这个就好了
