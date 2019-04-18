@@ -36,10 +36,13 @@
 
         <script id="fragment_shader" type="x-shader/x-fragment">
             varying vec2 vUv;
-
+            uniform float time;
             void main() {
-              
-                 gl_FragColor = vec4( vUv.y, 1.0, vUv.x,1.0); 
+                vec2 position = - 1.0 + 2.0 * vUv;
+                float red = abs( sin( position.x * position.y + time / 5.0 ) );
+                float green = abs( sin( position.x * position.y + time / 4.0 ) );
+                float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+                gl_FragColor = vec4( red, green, blue, 1.0 );
             }
  
     </script>
@@ -75,7 +78,11 @@
 
     // starsGeometry.vertices.push( star );
 
-  
+            var uniforms1 = {
+                time: { value: 1.0 }
+                };
+ 
+            var params = uniforms1;
 
  // 创建球体模型
  let ball = new THREE.SphereGeometry(40, 30, 30);
@@ -91,7 +98,7 @@ let pMaterial = new THREE.PointsMaterial({
   
     var material = new THREE.ShaderMaterial({
                 //shader着色器
-             
+                uniforms: params,
                 vertexShader: document.getElementById('vertexShader').textContent,
                  fragmentShader: document.getElementById('fragment_shader').textContent
  
@@ -101,6 +108,7 @@ let pMaterial = new THREE.PointsMaterial({
 // 创建粒子系统particleSystem==>Points
 let particleSystem = new THREE.Points(ball,material);
 // 加入场景
+
 scene.add(particleSystem);
 function initLight() {
             light = new THREE.AmbientLight(0xFF0000);//光
@@ -112,12 +120,12 @@ function initLight() {
         
         function render() {//实例化函数
             var delta = clock.getDelta();
-            // uniforms1.time.value += delta * 5;传递的变化的时间值
+             uniforms1.time.value += delta * 5;//传递的变化的时间值
              initLight();
             requestAnimationFrame(render);//下一帧的渲染函数、、游戏循环，所以能动。
            // starField.CubeGeometry.rotation.x+=1;
            particleSystem.rotation.x += 0.02;//改变x轴
-            particleSystem.rotation.y += 0.005;//改变y轴
+            particleSystem.rotation.y += 0.05;//改变y轴
             renderer.render(scene, camera);//渲染器实例场景和相机渲染
         }
         render();
