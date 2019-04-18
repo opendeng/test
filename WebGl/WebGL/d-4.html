@@ -104,8 +104,10 @@
 		<script src="TrackballControls.js"></script>
 		<script src="CSS3DRenderer.js"></script>
 
-		<div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js css3d</a> - periodic table. <a href="https://plus.google.com/113862800338869870683/posts/QcFk5HrWran" target="_blank" rel="noopener">info</a>.</div>
-		<div id="container"></div>
+		<!-- <div id="info"><a href="http://threejs.org" target="_blank" rel="noopener">three.js css3d</a> - periodic table. <a href="https://plus.google.com/113862800338869870683/posts/QcFk5HrWran" target="_blank" rel="noopener">info</a>.</div> -->
+        <!-- 挂载在大的div上面 -->
+        <div id="container"></div>
+        <!-- div里包含了4个按钮 -->
 		<div id="menu">
 			<button id="table">TABLE</button>
 			<button id="sphere">SPHERE</button>
@@ -115,6 +117,7 @@
 
 		<script>
 
+// 元素周期表
 			var table = [
 				"H", "Hydrogen", "1.00794", 1, 1,
 				"He", "Helium", "4.002602", 18, 1,
@@ -239,57 +242,58 @@
 			var camera, scene, renderer;
 			var controls;
 
-			var objects = [];
-			var targets = { table: [], sphere: [], helix: [], grid: [] };
+			var objects = [];//一个空数组
+			var targets = { table: [], sphere: [], helix: [], grid: [] };//对象里有四个空数组
 
 			init();
 			animate();
 
 			function init() {
 
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-				camera.position.z = 3000;
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );//相机设置
+				camera.position.z = 3000;//相机的角度
 
-				scene = new THREE.Scene();
+				scene = new THREE.Scene();//场景
 
 				// table
 
-				for ( var i = 0; i < table.length; i += 5 ) {
+				for ( var i = 0; i < table.length; i += 5 ) {//遍历很多数据的table，i+5的原因：间隔5个数组元素为一个化学元素
 
-					var element = document.createElement( 'div' );
-					element.className = 'element';
-					element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+					var element = document.createElement( 'div' );//创建div（每一个元素）
+					element.className = 'element';//给样式
+					element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';//给背景颜色
 
-					var number = document.createElement( 'div' );
-					number.className = 'number';
-					number.textContent = ( i / 5 ) + 1;
-					element.appendChild( number );
+					var number = document.createElement( 'div' );//放数字的div
+					number.className = 'number';//number的样式
+					number.textContent = ( i / 5 ) + 1;//设置数字文本
+					element.appendChild( number );//创建的div添加数字的div
 
-					var symbol = document.createElement( 'div' );
-					symbol.className = 'symbol';
-					symbol.textContent = table[ i ];
-					element.appendChild( symbol );
+					var symbol = document.createElement( 'div' );//放符号的div
+					symbol.className = 'symbol';//添加样式
+					symbol.textContent = table[ i ];//上下文
+					element.appendChild( symbol );//添加
 
-					var details = document.createElement( 'div' );
+					var details = document.createElement( 'div' );//同上
 					details.className = 'details';
 					details.innerHTML = table[ i + 1 ] + '<br>' + table[ i + 2 ];
 					element.appendChild( details );
 
-					var object = new THREE.CSS3DObject( element );
-					object.position.x = Math.random() * 4000 - 2000;
+					var object = new THREE.CSS3DObject( element );//3d对象。大概是将div变得3d吧（循环体中）
+					object.position.x = Math.random() * 4000 - 2000;//div元素场景位置位置
 					object.position.y = Math.random() * 4000 - 2000;
 					object.position.z = Math.random() * 4000 - 2000;
-					scene.add( object );
+					scene.add( object );//场景添加这个元素对象
 
-					objects.push( object );
+					objects.push( object );//一个数组添加了这个对象      这个objects的数组添加了一大堆对象。是做什么用？给下面的循环使用
 
+                        //
 					//
 
-					var object = new THREE.Object3D();
-					object.position.x = ( table[ i + 3 ] * 140 ) - 1330;
-					object.position.y = - ( table[ i + 4 ] * 180 ) + 990;
-
-					targets.table.push( object );
+                    // Object3D是ThreeJS中大部分物体的基类，它包含了物体的位移，旋转，缩放，以及各个物体父子关系的js实现。选取Object3D几个重要的属性做解释：
+					var object = new THREE.Object3D();//重新赋值
+					object.position.x = ( table[ i + 3 ] * 140 ) - 1330;//以及位置信息
+					object.position.y = - ( table[ i + 4 ] * 180 ) + 990;//位置信息
+					targets.table.push( object );//对象里面的数组存放数据，模型的位置被确定了
 
 				}
 
@@ -316,7 +320,7 @@
 
 				// helix
 
-				var vector = new THREE.Vector3();
+				var vector = new THREE.Vector3();//点
 
 				for ( var i = 0, l = objects.length; i < l; i ++ ) {
 
@@ -365,8 +369,10 @@
 				controls.maxDistance = 6000;
 				controls.addEventListener( 'change', render );
 
+
+//按钮
 				var button = document.getElementById( 'table' );
-				button.addEventListener( 'click', function () {
+				button.addEventListener( 'click', function () {//添加时间监听
 
 					transform( targets.table, 2000 );
 
@@ -401,42 +407,44 @@
 
 			}
 
+//transform 传入时间与对象
+
 			function transform( targets, duration ) {
 
-				TWEEN.removeAll();//移除所有
+				TWEEN.removeAll();//开始之前移除所有再遍历数组里的对象，确认位置
 
 				for ( var i = 0; i < objects.length; i ++ ) {
 
-					var object = objects[ i ];
-					var target = targets[ i ];
+					var object = objects[ i ];//有多少个对象，全局变量，遍历一次取一个
+					var target = targets[ i ];//目标的对象
 
-					new TWEEN.Tween( object.position )
+					new TWEEN.Tween( object.position )//变形动画位置去到每个位置
 						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
-						.easing( TWEEN.Easing.Exponential.InOut )
-						.start();
+						.easing( TWEEN.Easing.Exponential.InOut )//动画方式
+						.start();//启动动画
 
-					new TWEEN.Tween( object.rotation )
+					new TWEEN.Tween( object.rotation )//轨道控制
 						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
 						.easing( TWEEN.Easing.Exponential.InOut )
 						.start();
 
 				}
 
-				new TWEEN.Tween( this )
+				new TWEEN.Tween( this )//重复点击
 					.to( {}, duration * 2 )
 					.onUpdate( render )
 					.start();
 
 			}
 
-			function onWindowResize() {
+			function onWindowResize() {//窗口改变
 
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( window.innerWidth, window.innerHeight );//渲染器重新设置大小
 
-				render();
+				render();//重新渲染相机场景
 
 			}
 
