@@ -15,7 +15,7 @@
         
         // var renderer = new THREE.WebGLRenderer();//渲染器
       var  renderer=new THREE.WebGLRenderer({
-                    antialias:true,//antialias:true/false是否开启反锯齿
+                    antialias:false,//antialias:true/false是否开启反锯齿
                     precision:"highp",//precision:highp/mediump/lowp着色精度选择
                     alpha:true,//alpha:true/false是否可以设置背景色透明
                     premultipliedAlpha:false,//?
@@ -68,7 +68,7 @@ meshGeo.vertices.forEach(function (p,i) {
 var pointMaterial = new THREE.PointsMaterial({
     size: 1,
     color: 0x5899ef,
-    map: new THREE.TextureLoader().load("http://img5.imgtn.bdimg.com/it/u=3039943193,2131126084&fm=26&gp=0.jpg"),
+    map: new THREE.TextureLoader().load("../gradient.png"),
     side: THREE.DoubleSide,
     alphaTest: 0.5,
     transparent: true,
@@ -76,7 +76,7 @@ var pointMaterial = new THREE.PointsMaterial({
 var mesh = new THREE.Points(meshGeo, pointMaterial);
 mesh.rotation.x = -Math.PI/2;
 ///////////////////////////////////////////////////////////////
-var spherePa = imgTodata('https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3196360165,2596408750&fm=26&gp=0.jpg',function (){
+var spherePa = imgTodata('101.jpg',function (){
     if(spherePa.length < meshP.length ){
         var k = meshP.length - spherePa.length;
         for(var i =0;i< k;i++){
@@ -86,7 +86,7 @@ var spherePa = imgTodata('https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/i
             alert('图片粒子化数据太大，请修改图片取样因子或meshGeo参数');
         }
 });
-var spherePb = imgTodata('../img/map_inverteb.png',function () {
+var spherePb = imgTodata('g.jpg',function () {
     if(spherePb.length < meshP.length){
         var k = meshP.length - spherePb.length;
         for(var i =0;i< k;i++){
