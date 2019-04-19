@@ -40,4 +40,5 @@ sampler2D ：纹理。
 samplerCube ：Cube纹理。
 由于是类C语言，不像js那样会对变量类型进行自动隐式转换，所以变量在使用前需严格声明，而且在数字运算时，相同类型的数字才能进行加减乘除，例如 1 + 1.0 会报错。
 
-#好累
+#
+https://www.cnblogs.com/hsprout/p/7989076.html
