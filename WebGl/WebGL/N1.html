@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function imgTodata(src,callback) {
+    var imgData = [];
+    var image = new Image;
+    image.src = src;
+    image.crossOrigin = 'anonymous';//跨域
+    image.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        var context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, image.width, image.height);
+        var data = context.getImageData(0, 0, canvas.width, canvas.height);
+        var dLength = data.data.length;
+        for (var i = 0; i < dLength; i += 4) {
+            var xyz = {};
+            var x = (i / 4) % canvas.width;
+            var y = (i / 4 - x) / canvas.width;
+            if (i / 4 % 4 === 1 && y % 2 === 1 && 0 === data.data[i]) {
+                xyz.x = (x-image.width/2)/10;
+                xyz.y = -(y-image.height/2)/10;
+                xyz.z = 0;
+                imgData.push(xyz);
+            }
+        }
+        callback();
+    };
+    return imgData;
+}
+
+imgTodata("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3196360165,2596408750&fm=26&gp=0.jpg",function (){
+    if(spherePa.length < meshP.length ){
+        var k = meshP.length - spherePa.length;
+        for(var i =0;i< k;i++){
+            spherePa.push(spherePa[i]);
+        }
+    }else {
+            alert('图片粒子化数据太大，请修改图片取样因子或meshGeo参数');
+        }
+});
+
+
+</script>
+</html>

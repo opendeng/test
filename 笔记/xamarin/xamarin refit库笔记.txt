@@ -10,4 +10,11 @@ RestService类生成一个使用HttpClient进行调用的IGitHubApi实现：
 放进接口，皆可以调用
 var gitHubApi = RestService.For<IGitHubApi>("https://api.github.com");
 
+
+public interface IGitHubApi
+{
+    [Get("/users/{user}")]
+    Task<User> GetUser(string user);
+}
+
 var octocat = await gitHubApi.GetUser("octocat");
