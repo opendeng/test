@@ -21,6 +21,12 @@
     <p>Computed reversed message: "{{ reversedMessage }}"</p>
     <div id="demo">{{ fullName }}</div>
     <div  v-bind:class="{ active: isActive, 'text-danger': hasError }">属性的真假代表class的使用与否,可以与一般的class使用；可以使用计算属性</div>
+    <div v-bind:class="[activeClass, errorClass]">数组</div>
+    <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">lalal</div>
+    <div v-bind:style="styleObject">lalal</div>
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
 </div>
 </body>
 <script src="v-js.js"></script>

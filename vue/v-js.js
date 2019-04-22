@@ -13,6 +13,18 @@ var vm=new Vue({
         fullName: 'Foo Bar',
         isActive: false,
         hasError:true,
+        activeClass:"",
+        errorClass:"",
+        activeColor:"red",
+        fontSize:200,
+        styleObject: {
+            color: 'red',
+            fontSize: '13px'
+          },
+          ok:false,
+
+          
+
     },
     //计算属性（基于缓存）
     computed:{
