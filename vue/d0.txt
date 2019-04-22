@@ -1,2 +1,38 @@
 http://doc.vue-js.com/v2/guide/
 
+//vue实例会代理data数据的属性
+//v- 指令 缩写：v-bind=：; v-on=@;
+
+//computed: {//这个计算属性并不会更新、因为 Date.now() 不是响应式依赖：
+
+
+  now: function () {
+    return Date.now()
+  }
+}
+计算属性的get和set：
+computed: {
+  fullName: {
+    // getter
+    get: function () {
+      return this.firstName + ' ' + this.lastName
+    },
+    // setter
+    set: function (newValue) {
+      var names = newValue.split(' ')
+      this.firstName = names[0]
+      this.lastName = names[names.length - 1]
+    }
+  }
+}
+监听数据watch一般用于异步数据操作是使用。
+
+:class使用计算属性：
+computed: {
+  classObject: function () {
+    return {
+      active: this.isActive && !this.error,
+      'text-danger': this.error && this.error.type === 'fatal',
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    
+<div id="example">
+    <div>{{a}}+{{c}}{{b}}{{a+c}}</div>
+    <div v-once> 一次插值,不被改变{{c}}</div>
+    <div v-html="d"></div>
+    <div v-bind:id="e">123</div>
+    <button v-bind:disabled="someDynamicCondition">Button</button>
+    <div>{{1+1+a+c}}</div>
+    <Div>{{ message | capitalizee }}</Div>
+</div>
+   
+</body>
+<script src="indexjs.js"></script>
+</html>

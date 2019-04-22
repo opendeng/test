@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+    #active{
+        color: red;    }
+    </style>
+</head>
+<body >
+<div id="ddd">
+    <p v-if="seen">Now you see me</p>
+    <a v-bind:href="url">123</a>
+    <div>{{a}}</div>
+    <button v-on:click="doSomething">点击</button>
+    <p>Original message: "{{ message }}"</p>
+    <p>Computed reversed message: "{{ reversedMessage }}"</p>
+    <div id="demo">{{ fullName }}</div>
+    <div  v-bind:class="{ active: isActive, 'text-danger': hasError }">属性的真假代表class的使用与否,可以与一般的class使用；可以使用计算属性</div>
+</div>
+</body>
+<script src="v-js.js"></script>
+</html>
