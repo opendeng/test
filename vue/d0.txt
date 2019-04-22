@@ -49,3 +49,17 @@ v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做
 相比之下， v-show 简单得多——元素始终被编译并保留，只是简单地基于 CSS 切换。
 
 一般来说， v-if 有更高的切换消耗而 v-show 有更高的初始渲染消耗。因此，如果需要频繁切换使用 v-show 较好，如果在运行时条件不大可能改变则使用 v-if 较好。
+
+由于 JavaScript 的限制， Vue 不能检测以下变动的数组：
+
+当你直接设置一个项的索引时，例如： vm.items[indexOfItem] = newValue
+当你修改数组的长度时，例如： vm.items.length = newLength
+为了避免第一种情况，以下两种方式将达到像 vm.items[indexOfItem] = newValue 的效果， 同时也将触发状态更新：
+
+// Vue.set
+Vue.set(example1.items, indexOfItem, newValue)
+// Array.prototype.splice`
+example1.items.splice(indexOfItem, 1, newValue)
+避免第二种情况，使用 splice：
+
+example1.items.splice(newLength)
