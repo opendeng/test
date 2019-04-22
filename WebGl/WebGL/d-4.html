@@ -322,27 +322,31 @@
 
 				var vector = new THREE.Vector3();//点
 
-				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {//循环体
 
 					var theta = i * 0.175 + Math.PI;
 					var y = - ( i * 8 ) + 450;
 
-					var object = new THREE.Object3D();
+					var object = new THREE.Object3D();//所有模型的基类
+ 
+					//lootat
+					//设定一个个的圆柱坐标
+					//object的位置为圆柱里的一个坐标
+					object.position.setFromCylindricalCoords( 900, theta, y );//圆柱(半径、维度，圆柱多长)会变化
 
-					object.position.setFromCylindricalCoords( 900, theta, y );//圆柱(半径，？，？)
-
-					vector.x = object.position.x * 2;
+					vector.x = object.position.x * 2;//点的xyz位置:x*2的意义
 					vector.y = object.position.y;
-					vector.z = object.position.z * 2;
+					vector.z = object.position.z * 2;//z*2的意义
 
-					object.lookAt( vector );
+					object.lookAt( vector );//每个对象lookat自己的不远处？？水平位置不变。xz扩大。
+					//每个对象的朝向。
 
-					targets.helix.push( object );
+					targets.helix.push( object );//object信息放进数组
 
 				}
 
 				// grid
-
+				//位置
 				for ( var i = 0; i < objects.length; i ++ ) {
 
 					var object = new THREE.Object3D();
@@ -407,7 +411,7 @@
 
 			}
 
-//transform 传入时间与对象
+//transform 传入时间与对象、、动作函数
 
 			function transform( targets, duration ) {
 
@@ -418,7 +422,7 @@
 					var object = objects[ i ];//有多少个对象，全局变量，遍历一次取一个
 					var target = targets[ i ];//目标的对象
 
-					new TWEEN.Tween( object.position )//变形动画位置去到每个位置
+					new TWEEN.Tween( object.position )//变形动画位置去到每个位置原动画去到新的动画
 						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
 						.easing( TWEEN.Easing.Exponential.InOut )//动画方式
 						.start();//启动动画
