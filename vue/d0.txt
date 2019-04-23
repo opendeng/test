@@ -63,3 +63,45 @@ example1.items.splice(indexOfItem, 1, newValue)
 避免第二种情况，使用 splice：
 
 example1.items.splice(newLength)
+//时间修饰符
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+<!-- 修饰符可以串联  -->
+<a v-on:click.stop.prevent="doThat"></a>
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+<!-- 添加事件侦听器时使用事件捕获模式 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+<!-- 按键 -->
+<input v-on:keyup.enter="submit">
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+
+//
+v-model 并不关心表单控件初始化所生成的值。因为它会选择 Vue 实例数据来作为具体的值
+在标签插值会被v-model的值取代
+
+
+.number
+如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值：
+
+<input v-model.number="age" type="number">
+这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。
+
+.trim
+如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
+
+<input v-model.trim="msg">
+
+
+受现代 Javascript 的限制(以及 Object.observe 的废弃)，Vue 不能检测到对象属性的添加或删除。因为 Vue 在初始化实例时将属性转为 getter/setter，所以属性必须在 data 对象上才能让 Vue 转换它，这样才能让它是响应的。
+
+Vue 不允许在已经创建的实例上动态添加新的根级响应式属性（root-level reactive properties）。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上：
+
+Vue.set(vm.someObject, 'b', 2)
+
+组件需要在vue实例之前定义

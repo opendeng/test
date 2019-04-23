@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>.fade-enter-active, .fade-leave-active {
+        /* 過度：屬性 .5s秒 */
+            transition: opacity .5s
+          }
+          .fade-leave-active {
+              /* 贝塞尔速度曲线 */
+     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+          .fade-enter, .fade-leave-active {
+            padding-left: 10px;
+            opacity: 0
+          }
+          /* 动画 */
+.bounce-enter-active {
+      animation: bounce-in .5s;
+    }
+    .bounce-leave-active {
+     animation: bounce-out .5s;
+    }
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes bounce-out {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+          </style>
+</head>
+<body>
+    <div id="one">
+        <!-- v-mode实例数组作为控件的值 -->
+        <input v-model="message" placeholder="edit me">
+        <p>Message is: {{ message }}</p>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+        <br>
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+        <!-- for="id" 绑定id的值 -->
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkedNames }}</span>
+        <br>
+
+    <!-- 單選必須要有一點東西是一起的 -->
+    <input type="radio" id="one" value="One" v-model="picked">
+    <label for="one">One</label>
+    <br>
+    <!-- 額 -->
+    <input type="radio" id="two" value="Two" v-model="picked">
+    <label for="two">Two</label>
+    <br>
+    <span>Picked: {{ picked }}</span>
+    
+    <select v-model="selected">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+    <!-- 动态渲染 -->
+    <select v-model="selectedd">
+            <option v-for="option in options" v-bind:value="option.value">
+              {{ option.text }}
+            </option>
+          </select>
+         
+    <span>Selectedd: {{ selectedd }}</span>
+    <!-- 複選框 -->
+    <input
+    id="op"
+    type="checkbox"
+    v-model="toggle"
+    v-bind:true-value="a"
+    v-bind:false-value="b"
+  >
+  <label for="op">{{toggle}}</label>
+  <!-- 被改變后更新，不同步 -->
+  <input v-model.lazy="msg" /><span>{{msg}}<span>
+        
+        
+        
+        <div id="demo">
+                <button v-on:click="show = !show">
+                  Toggle
+                </button>
+                <!-- vue 封装了transition组件，可以提供动画效果 -->
+                <transition name="fade">
+                  <p v-if="showw">hello</p>
+                </transition>
+              </div>  
+        
+              <button @click="show = !show">Toggle show</button>
+              <transition name="bounce">
+                <p v-if="show">Look at me!</p>
+              </transition>
+        
+        
+        
+        
+        
+        
+        
+        </div>
+    <script src="表单控件绑定js.js"></script>
+</body>
+</html>
