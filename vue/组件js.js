@@ -82,15 +82,20 @@ window.onload=function(){
     data:{
         propA:123,
         propC:123,
-        total: 0
+        total: 0,
+        currentView: 'home'
     },
     methods: {
         incrementTotal: function () {
           this.total += 1
         }
-      }
+      },
     // 选项
-    
+    components: {
+        home: { template:"<input />" },
+        posts: { template:"<button>123</button>"  },
+        archive: { template:"<p>你好</p>" }
+      }
   });
   //组件
   

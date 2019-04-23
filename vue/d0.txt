@@ -105,3 +105,15 @@ Vue 不允许在已经创建的实例上动态添加新的根级响应式属性�
 Vue.set(vm.someObject, 'b', 2)
 
 组件需要在vue实例之前定义
+
+
+非父子组件通信
+有时候非父子关系的组件也需要通信。在简单的场景下，使用一个空的 Vue 实例作为中央事件总线：
+
+var bus = new Vue()
+// 触发组件 A 中的事件
+bus.$emit('id-selected', 1)
+// 在组件 B 创建的钩子中监听事件
+bus.$on('id-selected', function (id) {
+  // ...
+})

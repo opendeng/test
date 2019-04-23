@@ -23,6 +23,25 @@
             <p>{{ total }}</p>
             <button-counter v-on:increment="incrementTotal"></button-counter>
             <button-counter v-on:increment="incrementTotal"></button-counter>
+
+            <br>
+            <button @click="{{currentView='posts'}}"> {{currentView}}</button><br>
+            <button @click="{{currentView='home'}}"> {{currentView}}</button><br>
+<!-- 动态组件 -->
+<!-- <keep-alive> 保存在内存中不被销毁-->
+    </keep-alive>
+            <component v-bind:is="currentView">
+                    <!-- 组件在 vm.currentview 变化时改变！ -->
+            </component></keep-alive>
+            <br>
+    </div>
+    <div>
+        <p>关于分发内容:
+            <br>
+            <p>\\< slot>如果在子组件中定义，父组件中的内容会分发替换到slot所在的dom位置，并替换slot。如果父组件没有内容，就会显示slot包含的内容（如果有的话。）
+                <p slot="header">父级:Here might be a page title</p>
+               子级 ：《slot name=“header”》
+            </p>
     </div>
 </body>
 </html>
