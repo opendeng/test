@@ -243,7 +243,7 @@
 			var controls;
 
 			var objects = [];//一个空数组
-			var targets = { table: [], sphere: [], helix: [], grid: [] };//对象里有四个空数组
+			var targets = { table: [], sphere: [], helix: [], grid: [],dd: []  };//对象里有四个空数组
 
 			init();
 			animate();
@@ -297,20 +297,25 @@
 
 				}
 
-				// sphere
+				// sphere（球）
 
 				var vector = new THREE.Vector3();
 
 				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+						//l=118
+					//l为object的长度
 
-					var phi = Math.acos( - 1 + ( 2 * i ) / l );//额
-					var theta = Math.sqrt( l * Math.PI ) * phi;
-
+					//acos 方法以 -1 到 1 的一个数为参数，返回一个 0 到 pi （弧度）的数值。如果传入的参数值超出了限定的范围，将返回 NaN。
+					var phi = Math.acos( - 1 + ( 2 * i ) / l );//额反余弦函数-1,0，1之间波动的函数
+					var theta = Math.sqrt( l * Math.PI ) * phi;//sqrt求平方根*弧度
+					//var ddd = Math.sqrt( l * Math.PI );//19.253777113169136
+					//alert(ddd)
+						//圆面积=pi*r的平方。
 					var object = new THREE.Object3D();
 
-					object.position.setFromSphericalCoords( 800, phi, theta );//球面
+					object.position.setFromSphericalCoords( 800, phi, theta );//球面（半径，，起始角度）
 
-					vector.copy( object.position ).multiplyScalar( 2 );
+					vector.copy( object.position ).multiplyScalar( 2 );//复制求坐标,,将该向量与所传入的标量s进行相乘。
 
 					object.lookAt( vector );
 
@@ -318,27 +323,29 @@
 
 				}
 
-				// helix
+				// helix（圆柱）
 
 				var vector = new THREE.Vector3();//点
 
 				for ( var i = 0, l = objects.length; i < l; i ++ ) {//循环体
-
-					var theta = i * 0.175 + Math.PI;
-					var y = - ( i * 8 ) + 450;
-
+					//i从零开始的
+					var theta = i * 0.175 + Math.PI;//pi=180度。。度数越来越大
+					var y = - ( i * 8 ) + 450;//y的位置，从下面开始
+					//角度增加、y提升
+					//螺旋上升
 					var object = new THREE.Object3D();//所有模型的基类
  
 					//lootat
 					//设定一个个的圆柱坐标
 					//object的位置为圆柱里的一个坐标
-					object.position.setFromCylindricalCoords( 900, theta, y );//圆柱(半径、维度，圆柱多长)会变化
+					//圆柱360.每一度的y，每一度的y
+					object.position.setFromCylindricalCoords( 900, theta, y );//半径固定
 
 					vector.x = object.position.x * 2;//点的xyz位置:x*2的意义
 					vector.y = object.position.y;
 					vector.z = object.position.z * 2;//z*2的意义
 
-					object.lookAt( vector );//每个对象lookat自己的不远处？？水平位置不变。xz扩大。
+					object.lookAt( vector );//
 					//每个对象的朝向。
 
 					targets.helix.push( object );//object信息放进数组
@@ -355,7 +362,7 @@
 					object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
 					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
 
-					targets.grid.push( object );
+					targets.grid.push( object );//位置信息
 
 				}
 
