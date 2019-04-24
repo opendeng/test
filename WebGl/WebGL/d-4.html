@@ -312,8 +312,9 @@
 					//alert(ddd)
 						//圆面积=pi*r的平方。
 					var object = new THREE.Object3D();
-
-					object.position.setFromSphericalCoords( 800, phi, theta );//球面（半径，，起始角度）
+					//球坐标系
+					//
+					object.position.setFromSphericalCoords( 800, phi, theta );//球面（半径，角度，角度）
 
 					vector.copy( object.position ).multiplyScalar( 2 );//复制求坐标,,将该向量与所传入的标量s进行相乘。
 
@@ -458,6 +459,27 @@
 				render();//重新渲染相机场景
 
 			}
+	// 		function ray() {
+    //     var Sx = event.clientX;//鼠标单击位置横坐标
+    //     var Sy = event.clientY;//鼠标单击位置纵坐标
+    //     //屏幕坐标转标准设备坐标
+    //     var x = ( Sx / window.innerWidth ) * 2 - 1;//标准设备横坐标
+    //     var y = -( Sy / window.innerHeight ) * 2 + 1;//标准设备纵坐标
+    //     var standardVector  = new THREE.Vector3(x, y, 0.5);//标准设备坐标
+    //     //标准设备坐标转世界坐标
+    //     var worldVector = standardVector.unproject(camera);
+    //     //射线投射方向单位向量(worldVector坐标减相机位置坐标)
+    //     var ray = worldVector.sub(camera.position).normalize();
+    //     //创建射线投射器对象
+    //     var raycaster = new THREE.Raycaster(camera.position, ray);
+    //     //返回射线选中的对象
+    //     var intersects = raycaster.intersectObjects(scene.children);
+    //     if (intersects.length > 0) {
+    //         intersects[0].object.material.transparent = true;
+    //         intersects[0].object.material.opacity = 0.6;
+    //     }
+    // }
+    // document.addEventListener('click',ray);// 监听窗口鼠标单击事件
 
 			function animate() {//动画的开始以及下一帧以及轨道控件的实时跟新
 

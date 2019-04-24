@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8">
+		<title>three.js</title>
+		<style>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+           
+		</style>
+	</head>
+    <!-- /* 射线 */ -->
+	<body>
+		<script type="text/javascript" src="three.js"></script>
+		<script>
+			var renderer, scene, camera, light;
+			var INTERSECTED;
+			var raycaster;
+			var mouse;
+			var intersects = [];
+ 
+			function init() {
+				renderer = new THREE.WebGLRenderer({
+					antialias: true
+				});//渲染器
+				renderer.setClearColor(0xffffff);//背景色
+				renderer.setSize(window.innerWidth, window.innerHeight);//大小
+				scene = new THREE.Scene();//场景
+				camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);//透视相机
+				camera.lookAt(new THREE.Vector3(20, 0, 20));//朝向点观看
+				camera.position.set(-100, 25, -100);//位置
+				light = new THREE.AmbientLight(0xffffff);//灯光
+				scene.add(light);
+			    raycaster = new THREE.Raycaster();//射线
+			    mouse = new THREE.Vector2();//2维点
+				document.body.appendChild(renderer.domElement);//挂载渲染器
+				document.addEventListener('mousemove', onDocumentMouseMove, false);//添加事件监听
+                // document.addEventListener('click', onDocumentMouseMove, false);//添加事件监听
+				creatCube();//物体模型
+				render();
+			}
+ 
+			function onDocumentMouseMove(event) {
+				event.preventDefault();
+                //转设备坐标吧
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;//2维点
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			}
+            function onDocumentMouseMove(event) {
+				event.preventDefault();
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			}
+ 
+			function creatCube() {
+				for (var i = 0; i < 50; i++) {
+					var geometry = new THREE.CubeGeometry(4, 4, 4);
+					var material = new THREE.MeshBasicMaterial({
+						color: Math.random() * 0xffffff,
+						opacity: 0.5
+					});
+					var mesh = new THREE.Mesh(geometry, material);
+					mesh.position.x = Math.random() * 100 - 10;
+					mesh.position.y = Math.random() * 100 - 10;
+					mesh.position.z = Math.random() * 100 - 10;
+					scene.add(mesh);
+				}
+			}
+ 
+			function render() {
+                //射线也需要一直渲染吗
+				requestAnimationFrame(render);
+				renderer.render(scene, camera);//渲染再操作
+				raycaster.setFromCamera(mouse, camera);//二维点
+				var intersects = raycaster.intersectObjects(scene.children);//返回射线经过的数组
+				if (intersects.length > 0) {
+					if (INTERSECTED != intersects[0].object) {
+						if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+						INTERSECTED = intersects[0].object;
+						INTERSECTED.currentHex = INTERSECTED.material.color.getHex();//当前颜色
+						INTERSECTED.material.color.set( 0xff0000 );
+                        // alert(123);
+					}
+				} else {
+					if (INTERSECTED) INTERSECTED.material.color.set(INTERSECTED.currentHex);//变回原来的颜色
+					INTERSECTED = null;
+				}
+			}
+			init();
+		</script>
+	</body>
+ 
+</html>
