@@ -50,13 +50,13 @@
            //  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);//透视相机
              camera = new THREE.PerspectiveCamera( 45, width / height , 1 , 5000 );//设置透视投影的相机,默认情况下相机的上方向为Y轴，右方向为X轴，沿着Z轴朝里（视野角：fov 纵横比：aspect 相机离视体积最近的距离：near 相机离视体积最远的距离：far）
             camera.position.x = 0;//设置相机的位置坐标
-            camera.position.y = 0;//设置相机的位置坐标
+            camera.position.y = 300;//设置相机的位置坐标
            
-            camera.position.z = 150;//设置相机的位置坐标
+            camera.position.z = 300;//设置相机的位置坐标
             camera.up.x = 0;//设置相机的上为「x」轴方向
             camera.up.y = 1;//设置相机的上为「y」轴方向
             camera.up.z = 0;//设置相机的上为「z」轴方向
-            // camera.lookAt( {x:0, y:0, z:0 } );//设置视野的中心坐标
+             camera.lookAt( {x:0, y:0, z:0 } );//设置视野的中心坐标
           }
        
  
@@ -66,23 +66,21 @@
             scene = new THREE.Scene();
             scene.background = new THREE.Color( 0xffffff );//银色
             //雾化效果
-				  scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );//使用该属性可以为场景添加雾化效果，可以产生隐藏远处物体的浓雾效果
-            var gridHelper = new THREE.GridHelper( 28, 28, 0x303030, 0x303030 );
+				    scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );//使用该属性可以为场景添加雾化效果，可以产生隐藏远处物体的浓雾效果
+           
+            //depthWrite渲染此材质是否对深度缓冲区有任何影响。默认为true。
+            var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0xa0a0a0, depthWrite: false } ) );
+				    mesh.rotation.x = - Math.PI / 2;
+				    mesh.receiveShadow = true;
+				    scene.add( mesh );
+            //网格
+            var gridHelper = new THREE.GridHelper( 2000, 10, 0x303030, 0x303030 );
             gridHelper.position.x=0;
             gridHelper.position.y=0;
             gridHelper.position.z=0;
 
             scene.add( gridHelper );//
-            //depthWrite渲染此材质是否对深度缓冲区有任何影响。默认为true。
-            var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0xFFFF00, depthWrite: false } ) );
-				mesh.rotation.x = - Math.PI / 2;
-				mesh.receiveShadow = true;
-				scene.add( mesh );
-            
-        //     var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
-				// mesh.rotation.x = - Math.PI / 2;
-				// mesh.receiveShadow = true;
-				// scene.add( mesh );
+     
           }
 
           var loader = new THREE.FBXLoader();
@@ -91,41 +89,27 @@
 // scene.add( object );
 
 // } );
-loader.load( 'Samba Dancing.fbx', function ( object ) {
 
-mixer = new THREE.AnimationMixer( object );//AnimationMixer动画混合器
 
-var action = mixer.clipAction( object.animations[ 0 ] );
-action.play();
-
-object.traverse( function ( child ) {
-
-  if ( child.isMesh ) {
-
-    child.castShadow = true;
-    child.receiveShadow = true;
-
-  }
-
+    loader.load( 'Samba Dancing.fbx', function ( object ) {
+      
+      mixer = new THREE.AnimationMixer( object );//AnimationMixer动画混合器
+      var action = mixer.clipAction( object.animations[ 0 ] );
+      action.play();//动画
+      object.traverse( function ( child ) {//在对象以及后代中执行的回调函数。
+              if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              // material= new THREE.MeshLambertMaterial({color: 0xa0a0a0,});
+              // child.Material=material;             
+              } 
+                            });   
+                            // material= new THREE.MeshLambertMaterial({color: 0xa0a0a0,});
+                            // object.Material=material; 
+      scene.add( object );
+   
 } );
 
-scene.add( object );
-
-} );
-
-    //Samba Dancing idle_2
-    // loader.load( 'robot.FBX', 
-        // function ( object ) {
-		// 			scene.add( object );
-		// 		} );
-    //     loader.load( 'nurbs.fbx', function ( object ) {
-           
-		// 			scene.add( object );
- 
-    // } );
-    
- 
-       
           //设置光源
           var light; 
        
@@ -136,23 +120,27 @@ scene.add( object );
             // light.position.set( 0, 200, 0 );//设置光源向量xyz
             // scene.add(light);// 追加光源到场景
 
-            lightaa = new THREE.PointLight( 0xFFC125,100,500 );//点
-            scene.add( lightaa );
+            // lightaa = new THREE.PointLight( 0xFFC125,100,500 );//点
+            // scene.add( lightaa );
 
-            lighta = new THREE.AmbientLight( 0x000080, 1 );//青色
-            scene.add( lighta );
-            lightd = new THREE.HemisphereLight( 0xFF00FF, 0xFF00FF );
-				lightd.position.set( 0, 0, 300 );
-				scene.add( lightd );
+            // lighta = new THREE.AmbientLight( 0x000080, 1 );//青色
+            // scene.add( lighta );
+        //     lightd = new THREE.HemisphereLight( 0xFF00FF, 0xFF00FF );
+				// lightd.position.set( 0, 0, 300 );
+				// scene.add( lightd );
 
-				lightc = new THREE.DirectionalLight( 0xffffff,20 );//平行光
-				lightc.position.set( 0, 200, 100 );
-				lightc.castShadow = true;
-				lightc.shadow.camera.top = 180;
-				lightc.shadow.camera.bottom = - 100;
-				lightc.shadow.camera.left = - 120;
-				lightc.shadow.camera.right = 120;
-				scene.add( lightc );
+        light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+				light.position.set( 0, 200, 0 );
+				scene.add( light );
+
+				light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 200, 100 );
+				light.castShadow = true;
+				light.shadow.camera.top = 180;
+				light.shadow.camera.bottom = - 100;
+				light.shadow.camera.left = - 120;
+				light.shadow.camera.right = 120;
+				scene.add( light );
            
           
           }
@@ -180,22 +168,17 @@ scene.add( object );
   
           //执行
           initThree();
-            initCamera();
-            initScene(); 
-
-            var controls;
-          controls = new THREE.OrbitControls( camera, renderer.domElement ); 
- 
+          initCamera();
+          initScene(); 
+          initLight()
+          //控制 
+          var controls;
+          controls = new THREE.OrbitControls( camera, renderer.domElement );
           controls.enableDamping = true; 
- 
           controls.enableZoom = true; 
- 
           controls.autoRotate = false; 
- 
           controls.minDistance = 200; 
-
           controls.maxDistance = 600; 
-
           controls.enablePan = true; 
          
 				
@@ -206,14 +189,14 @@ scene.add( object );
 // 如果 autoStart 设置为 true 且时钟并未运行，则该方法同时启动时钟。
             var delta = clock.getDelta();
 
-if ( mixer ) mixer.update( delta );
+          if ( mixer ) mixer.update( delta );
 
-renderer.render( scene, camera );
-
-            controls.update(); 
+          renderer.render( scene, camera );
+          
+          controls.update(); 
             // initLight();
             // initObject();
-         //   renderer.clear(); 
+            //renderer.clear(); 
              renderer.render(scene, camera);
             requestAnimationFrame(threeStart);
           }
