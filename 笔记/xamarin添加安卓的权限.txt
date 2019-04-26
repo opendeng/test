@@ -1,0 +1,5 @@
+设置权限的方法三选一：
+
+1.在 Properties 文件夹下的 AssemblyInfo.cs 文件下添加权限；
+2.右键安卓，选择属性，安卓清单，选择权限打勾。会在AssemblyInfo.cs文件处自动添加。【方法1】 
+2.或者在 Properties 文件夹下的 AndroidManifest.xml 文件“manifest”节点内添加权限；
