@@ -1,0 +1,22 @@
+ 
+安卓的xamarin的style文件添加：
+<style name="Theme.Splash" parent="android:Theme">
+    <item name="android:windowBackground">@drawable/thisa</item>
+    <item name="android:windowNoTitle">true</item>
+    <!-- -->
+  </style>
+
+
+  /////////////////////////////设置了另一个Active来设置打开应用图片；；；；在此之前需要把上一个Active的MainLauncher 设置为false
+    [Activity(Theme = "@style/Theme.ddd", MainLauncher = true,NoHistory =true)]
+    public class SplashActivity : Activity
+    {
+        protected override void OnCreate(Bundle sadbundle)
+        {
+
+            base.OnCreate(sadbundle);
+            this.StartActivity(typeof(MainActivity));//打开主Active
+
+        
+        }
+    }
