@@ -1,0 +1,73 @@
+需要安装三个的NuGet包：
+SkiaSharp;
+SkiaSharp.Views；
+SkiaSharp.Views.Forms；
+
+
+SKCanvasView占用页面的整个内容区域。。SKCanvasView只能单标签闭合。
+tabble的页面不能是ContentPage。
+SKCanvasView类似于HTML的canvas。
+
+、、、代码。cs
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace App3.Views
+{
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class Yuan : ContentPage
+    {
+		public Yuan ()
+		{
+			InitializeComponent ();
+		}
+        void OnCanvasViewPaintSurface(object sender, SKPaintSurfaceEventArgs args)
+        {
+            //时间属性
+            SKImageInfo info = args.Info;//包含绘图的信息
+            SKSurface surface = args.Surface;//对象表示的绘图图面本身，canvas类型。
+            SKCanvas canvas = surface.Canvas;//此类是绘图上下文用于执行实际绘制的图形。 
+            //SKCanvas对象：将封装图形状态，其中包括图形转换和剪辑。
+            //就是画布吗？
+            canvas.Clear();
+
+            SKPaint paint = new SKPaint//画什么样的画的一支笔
+            {
+                Style = SKPaintStyle.Stroke,//笔触的样式
+                //或Fill
+                // 或Stroke
+                //或StrokeAndFill：
+                //上面是笔画样式
+                //颜色换为ToSKColor
+                Color = Color.Red.ToSKColor(),
+                StrokeWidth = 25//宽
+            };
+            //画圆
+            canvas.DrawCircle(info.Width / 2, info.Height / 2, 100, paint);//(宽、高、笔)
+
+            paint.Style = SKPaintStyle.Fill;//重新设置笔
+            paint.Color = SKColors.Blue;//颜色
+            //画了两次
+            canvas.DrawCircle(info.Width / 2, info.Height / 2, 100, paint);
+        }
+    }
+}
+、、、、、xaml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             x:Class="App3.Views.Yuan">
+    <skia:SKCanvasView PaintSurface="OnCanvasViewPaintSurface" />
+    <!--PaintSurface事件处理程序完成所有绘制的。-->
+</ContentPage>
+。、、、、、、、、、
