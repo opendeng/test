@@ -1,0 +1,11 @@
+ using (SKPaint paint = new SKPaint())//画笔；using(){}作为语句，用于定义一个范围，在此范围的末尾将释放paint对象。
+            {
+                paint.Style = SKPaintStyle.Stroke;//空心圆
+                paint.Color = SKColors.Blue;//蓝色
+                paint.StrokeWidth = 50;//笔画大小
+                canvas.DrawOval(info.Width / 2, info.Height / 2, xRadius, yRadius, paint);//画了
+
+                paint.Style = SKPaintStyle.Fill;//填充圆
+                paint.Color = SKColors.SkyBlue;//天蓝
+                canvas.DrawOval(info.Width / 2, info.Height / 2, xRadius, yRadius, paint);//画了
+            }

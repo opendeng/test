@@ -1,0 +1,11 @@
+Device是一个静态类，提供一些属性和方法帮助开发者判断平台类型、对不同平台提供不同处理。
+
+
+Device.StartTimer
+启动一个简单的定时器，每隔TimeSpan时间会执行Func<bool>对应的动作。当Func<bool>返回false时，定时器停止。
+创建一个周期为1秒的定时器：
+Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+{
+    label.Text = DateTime.Now.ToString("F");
+    return true;
+});

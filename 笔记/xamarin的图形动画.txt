@@ -3,8 +3,21 @@ SkiaSharp;
 SkiaSharp.Views；
 SkiaSharp.Views.Forms；
 
+动画库有打开图库的例子
 
-SKCanvasView占用页面的整个内容区域。。SKCanvasView只能单标签闭合。
+ SKCanvasView 的  PaintSurface事件处理程序完成所有绘制的。 此方法可以多次调用应用程序运行时，这样它应保持的所有信息重新创建所需的图形显示
+
+skcolor时候32为ARGB颜色：
+颜色ARGB 是一种色彩模式，也就是RGB色彩模式附加上Alpha（透明度）通道，常见于32位位图的存储结构。
+
+点击吧：
+  <skia:SKCanvasView PaintSurface="OnCanvasViewPaintSurface">
+        <skia:SKCanvasView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnCanvasViewTapped" />
+        </skia:SKCanvasView.GestureRecognizers>
+    </skia:SKCanvasView>
+
+SKCanvasView占用页面的整个内容区域。。
 tabble的页面不能是ContentPage。
 SKCanvasView类似于HTML的canvas。
 
@@ -71,3 +84,15 @@ namespace App3.Views
     <!--PaintSurface事件处理程序完成所有绘制的。-->
 </ContentPage>
 。、、、、、、、、、
+
+
+获取程序集（再获取签入资源。）
+    Assembly assembly = GetType().GetTypeInfo().Assembly;
+
+            //从此程序集加载指定的清单资源。访问嵌入到PCL图片资源GetManifestResourceStream（属性ID）；
+            //如果不能确定资源ID可以调用Assembly 对象的GetManifestResourceNames方法，返回一个string类型数组，表示项目中所有资源的ID。
+            using (Stream stream = assembly.GetManifestResourceStream(
+                                    "SkiaSharpFormsDemos.Media.SeatedMonkey.jpg"))
+            {
+                bitmap1 = SKBitmap.Decode(stream);
+            }
