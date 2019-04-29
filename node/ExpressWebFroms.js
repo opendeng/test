@@ -21,7 +21,7 @@ app.post('/process_post', urlencodedParser, function (req, res) {
 
 
 app.get('/', function (req, res) {
-   res.send("you are a good man")
+   res.send("you are a good man,but......")
  })
 
  app.get('/AA', function (req, res) {
