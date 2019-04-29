@@ -1,0 +1,66 @@
+新建文件夹：里面有放数据库的和日子文件的
+
+//配置环境变量：
+把
+
+//配置数据库文件夹路径：
+mongod --dbpath D:\Mondbdata   
+
+
+安装为一个window服务：
+mongod --bind_ip 0.0.0.0 --logpath D:\Mondbdata\logs\mongo.log --logappend --dbpath D:\Mondbdata\db --port 27017 --serviceName "MongoDBddd" --serviceDisplayName "MongoDBddd" --install 安装到window服务
+
+关于安装window服务的参数：
+--bind_ip	绑定服务IP，若绑定127.0.0.1，则只能本机访问，不指定默认本地所有IP
+--logpath	定MongoDB日志文件，注意是指定文件不是目录
+--logappend	使用追加的方式写日志
+--dbpath	指定数据库路径
+--port	指定服务端口号，默认端口27017
+--serviceName	指定服务名称
+--serviceDisplayName	指定服务名称，有多个mongodb服务时执行。
+--install	指定作为一个Windows服务安装。
+
+
+操作数据库：
+
+创建数据库（数据库不会被创建，因为没有内容[集合]）：集合相当于表；
+use dbname
+
+创建一个集合 
+db.createCollection("emp") 创建一个emp集合
+
+保存数据：
+db.dept.insert({"deptno":10,"dname":"财务部","loc":"北京"});
+数据库.集合.插入({});
+
+插入：
+var deptData = {
+"deptno":20,
+"dname":"研发部",
+"loc":"深圳",
+"count":20,
+"avg":8000.0，
+"a":12,
+"b":22
+};
+db.dept.insert({
+"depdddtno":1220,"dname":"财务部","loc":"北京","lo11c":"北1121京"
+
+})
+
+查看dept集合数据
+db.dept.find()查找
+db.集合名称.find({若干条件})
+
+10、更新数据
+var timData = {
+"account":"tim",
+"passwd":"123",
+"studentid":525
+};
+db.dept.update({"_id" : ObjectId("5624fe1ffddcd6e2428e9ed1")},timData);
+11、删除集合
+语法：db.集合名称.drop()
+db.dept.drop()
+12、删除数据库(删除当前所在的数据库信息)
+db.dropDatbase()
