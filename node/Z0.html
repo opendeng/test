@@ -15,7 +15,7 @@
     <script>
         var mess = document.getElementById("mess");
         if(window.WebSocket){//如果连接存在。
-            var ws = new WebSocket('ws://127.0.0.1:8001');
+            var ws = new WebSocket('ws://127.0.0.1:8001');//与服务器通讯
 
             ws.onopen = function(e){
                 console.log("连接服务器成功");
@@ -28,7 +28,7 @@
                 console.log("连接出错");
             }
 
-            ws.onmessage = function(e){//事件(信息)的数据
+            ws.onmessage = function(e){//事件(信息)的数据///实例对象的onmessage属性，用于指定收到服务器数据后的回调函数。
                 var time = new Date();
                 mess.innerHTML+=time+"的消息："+e.data+"<br>"
             }
