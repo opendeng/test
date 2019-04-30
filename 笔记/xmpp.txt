@@ -1,0 +1,33 @@
+1、XMPP是可扩展消息与存在协议，主要用于im。
+2、他是一种类似于http协议的数据传输协议，过程如：“解包装—>包装”过程。
+3、在XMPP中，有三个角色：客户端，服务器，网关。 ?在三者之间可以进行任意两两通信。服务器承担客户端信息记录，连接管理和信息的路由功能。网关承担与异构即时通信系统的互联互通。
+4、XMPP的基本网络形式是单客户端通过TCP/IP连接到单服务器，然后传输XML。
+5、他是基于C/S结构的，分布式网络，使用xml的数据格式。
+6、XMPP的核心部分是由他的节构成的。
+7、xmpp网络：服务器，客户端，组件，插件。
+8、xmpp的jid与电子邮件地址类似。节点、域、资源。
+9、xmpp主词汇表有3种节：<message>(用于在实体间交换“发后不管”消息)<presence>(传达出席状态变化并用来操纵出息订阅)<iq>(提供类似http的get和post操作的请求响应语义。).
+10、xmpp会话：连接、流的建立、身份验证、会话正文、断开连接。
+
+从一个client到另一个client的jabber消息和数据都要通过xmpp server。
+1.client连接到server。
+2.server 利用本地目录系统的证书对其认证。
+3.client制定目标地址，让server告知目标状态。
+4.server查找，链接并进行相互认证。
+5.client间进行交互
+
+<iq from='jane@longbourn.lit/garden'  type='get'  id='roster2'>  
+
+<query xmlns='jabber:iq:roster'/>  
+
+</iq>  
+。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+<iq to='jane@longbourn.lit/garden'  type='result'  id='roster2'>  
+
+<query xmlns='jabber:iq:roster'>  
+
+<item jid='elizabeth@longbourn.lit' name='Elizabeth'/>  
+<item jid='bingley@netherfield.lit' name='Bingley'/>  
+</query>  
+
+</iq>  
