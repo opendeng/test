@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>123</div>
+</body>
+<script src="./js闭包封装.js"></script>
+<script>
+    window.onload = function() {
+        var a = document.getElementsByTagName("div")[0];
+        a.onclick = function() {
+            alert("1231");
+        };
+
+        function dd() {
+            alert(a)
+        }
+
+        var p1 = new Person("0001", "鸿洋", "22");
+        var p2 = new Person("0002", "abc", "23");
+        var p3 = new Person("0003", "aobama", "24");
+
+        console.log(p1.toString()); //no = 0001 , name = 鸿洋 , age = 22  
+        console.log(p2.toString()); //no = 0002 , name = abc , age = 23  
+        console.log(p3.toString()); //no = 0003 , name = aobama , age = 24
+    }
+</script>
+
+</html>

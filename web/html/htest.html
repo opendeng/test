@@ -14,7 +14,25 @@
 </body>
 <!-- <script src="../nodejs/webpagejs.js"></script> -->
 <script src="../index.js"></script>
+
+<script src="./js封装.js"></script>
 <script>
+    window.onload = function() {
+
+        var p1 = new Person("0001", "鸿洋", "22");
+        for (var c in p1) {
+            console.log(c)
+        }
+        console.log(p1.setNo);
+
+        console.log(p1.toString()); //no = 0001 , name = 鸿洋 , age = 22  
+        p1.setNo("0003");
+        console.log(p1.toString()); //no = 0003 , name = 鸿洋 , age = 22  
+        p1.no = "0004";
+        console.log(p1.toString()); //no = 0003 , name = 鸿洋 , age = 22
+
+
+    }
 </script>
 
 </html>
